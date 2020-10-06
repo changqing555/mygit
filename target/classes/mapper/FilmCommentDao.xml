@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.FilmCommentDao">
+
+    <resultMap type="edu.xja.entity.FilmComment" id="FilmCommentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <result property="commentPersonId" column="comment_person_id" jdbcType="INTEGER"/>
+        <result property="commentContent" column="comment_content" jdbcType="VARCHAR"/>
+        <result property="assessGrade" column="assess_grade" jdbcType="OTHER"/>
+        <result property="gradeMark" column="grade_mark" jdbcType="VARCHAR"/>
+        <result property="likenums" column="likenums" jdbcType="INTEGER"/>
+        <result property="buyTicketsFlag" column="buy_tickets_flag" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FilmCommentMap">
+        select
+          id, comment_time, comment_person_id, comment_content, assess_grade, grade_mark, likenums, buy_tickets_flag, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_comment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FilmCommentMap">
+        select
+          id, comment_time, comment_person_id, comment_content, assess_grade, grade_mark, likenums, buy_tickets_flag, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FilmCommentMap">
+        select
+        id, comment_time, comment_person_id, comment_content, assess_grade, grade_mark, likenums, buy_tickets_flag,
+        create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="commentTime != null">
+                and comment_time = #{commentTime}
+            </if>
+            <if test="commentPersonId != null">
+                and comment_person_id = #{commentPersonId}
+            </if>
+            <if test="commentContent != null and commentContent != ''">
+                and comment_content = #{commentContent}
+            </if>
+            <if test="assessGrade != null">
+                and assess_grade = #{assessGrade}
+            </if>
+            <if test="gradeMark != null and gradeMark != ''">
+                and grade_mark = #{gradeMark}
+            </if>
+            <if test="likenums != null">
+                and likenums = #{likenums}
+            </if>
+            <if test="buyTicketsFlag != null">
+                and buy_tickets_flag = #{buyTicketsFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_film_comment(comment_time, comment_person_id, comment_content, assess_grade, grade_mark, likenums, buy_tickets_flag, create_time, creator, operate_time, operator, delete_flag)
+        values (#{commentTime}, #{commentPersonId}, #{commentContent}, #{assessGrade}, #{gradeMark}, #{likenums}, #{buyTicketsFlag}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_film_comment
+        <set>
+            <if test="commentTime != null">
+                comment_time = #{commentTime},
+            </if>
+            <if test="commentPersonId != null">
+                comment_person_id = #{commentPersonId},
+            </if>
+            <if test="commentContent != null and commentContent != ''">
+                comment_content = #{commentContent},
+            </if>
+            <if test="assessGrade != null">
+                assess_grade = #{assessGrade},
+            </if>
+            <if test="gradeMark != null and gradeMark != ''">
+                grade_mark = #{gradeMark},
+            </if>
+            <if test="likenums != null">
+                likenums = #{likenums},
+            </if>
+            <if test="buyTicketsFlag != null">
+                buy_tickets_flag = #{buyTicketsFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_film_comment where id = #{id}
+    </delete>
+
+</mapper>

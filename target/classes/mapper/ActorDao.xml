@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.ActorDao">
+
+    <resultMap type="edu.xja.entity.Actor" id="ActorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="actorName" column="actor_name" jdbcType="VARCHAR"/>
+        <result property="otherName" column="other_name" jdbcType="VARCHAR"/>
+        <result property="actorNation" column="actor_nation" jdbcType="VARCHAR"/>
+        <result property="actorBirthday" column="actor_birthday" jdbcType="TIMESTAMP"/>
+        <result property="bloodType" column="blood_type" jdbcType="VARCHAR"/>
+        <result property="birthPlace" column="birth_place" jdbcType="VARCHAR"/>
+        <result property="actorIdentity" column="actor_identity" jdbcType="VARCHAR"/>
+        <result property="actorSex" column="actor_sex" jdbcType="VARCHAR"/>
+        <result property="actorConstellation" column="actor_constellation" jdbcType="VARCHAR"/>
+        <result property="actorGraduation" column="actor_graduation" jdbcType="VARCHAR"/>
+        <result property="actorHigh" column="actor_high" jdbcType="INTEGER"/>
+        <result property="actorIntroduce" column="actor_introduce" jdbcType="VARCHAR"/>
+        <result property="actorFansName" column="actor_fans_name" jdbcType="VARCHAR"/>
+        <result property="actorNationality" column="actor_nationality" jdbcType="VARCHAR"/>
+        <result property="actorCompany" column="actor_company" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ActorMap">
+        select
+          id, actor_name, other_name, actor_nation, actor_birthday, blood_type, birth_place, actor_identity, actor_sex, actor_constellation, actor_graduation, actor_high, actor_introduce, actor_fans_name, actor_nationality, actor_company, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_actor
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ActorMap">
+        select
+          id, actor_name, other_name, actor_nation, actor_birthday, blood_type, birth_place, actor_identity, actor_sex, actor_constellation, actor_graduation, actor_high, actor_introduce, actor_fans_name, actor_nationality, actor_company, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_actor
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ActorMap">
+        select
+        id, actor_name, other_name, actor_nation, actor_birthday, blood_type, birth_place, actor_identity, actor_sex,
+        actor_constellation, actor_graduation, actor_high, actor_introduce, actor_fans_name, actor_nationality,
+        actor_company, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_actor
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="actorName != null and actorName != ''">
+                and actor_name = #{actorName}
+            </if>
+            <if test="otherName != null and otherName != ''">
+                and other_name = #{otherName}
+            </if>
+            <if test="actorNation != null and actorNation != ''">
+                and actor_nation = #{actorNation}
+            </if>
+            <if test="actorBirthday != null">
+                and actor_birthday = #{actorBirthday}
+            </if>
+            <if test="bloodType != null and bloodType != ''">
+                and blood_type = #{bloodType}
+            </if>
+            <if test="birthPlace != null and birthPlace != ''">
+                and birth_place = #{birthPlace}
+            </if>
+            <if test="actorIdentity != null and actorIdentity != ''">
+                and actor_identity = #{actorIdentity}
+            </if>
+            <if test="actorSex != null and actorSex != ''">
+                and actor_sex = #{actorSex}
+            </if>
+            <if test="actorConstellation != null and actorConstellation != ''">
+                and actor_constellation = #{actorConstellation}
+            </if>
+            <if test="actorGraduation != null and actorGraduation != ''">
+                and actor_graduation = #{actorGraduation}
+            </if>
+            <if test="actorHigh != null">
+                and actor_high = #{actorHigh}
+            </if>
+            <if test="actorIntroduce != null and actorIntroduce != ''">
+                and actor_introduce = #{actorIntroduce}
+            </if>
+            <if test="actorFansName != null and actorFansName != ''">
+                and actor_fans_name = #{actorFansName}
+            </if>
+            <if test="actorNationality != null and actorNationality != ''">
+                and actor_nationality = #{actorNationality}
+            </if>
+            <if test="actorCompany != null and actorCompany != ''">
+                and actor_company = #{actorCompany}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_actor(actor_name, other_name, actor_nation, actor_birthday, blood_type, birth_place, actor_identity, actor_sex, actor_constellation, actor_graduation, actor_high, actor_introduce, actor_fans_name, actor_nationality, actor_company, create_time, creator, operate_time, operator, delete_flag)
+        values (#{actorName}, #{otherName}, #{actorNation}, #{actorBirthday}, #{bloodType}, #{birthPlace}, #{actorIdentity}, #{actorSex}, #{actorConstellation}, #{actorGraduation}, #{actorHigh}, #{actorIntroduce}, #{actorFansName}, #{actorNationality}, #{actorCompany}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_actor
+        <set>
+            <if test="actorName != null and actorName != ''">
+                actor_name = #{actorName},
+            </if>
+            <if test="otherName != null and otherName != ''">
+                other_name = #{otherName},
+            </if>
+            <if test="actorNation != null and actorNation != ''">
+                actor_nation = #{actorNation},
+            </if>
+            <if test="actorBirthday != null">
+                actor_birthday = #{actorBirthday},
+            </if>
+            <if test="bloodType != null and bloodType != ''">
+                blood_type = #{bloodType},
+            </if>
+            <if test="birthPlace != null and birthPlace != ''">
+                birth_place = #{birthPlace},
+            </if>
+            <if test="actorIdentity != null and actorIdentity != ''">
+                actor_identity = #{actorIdentity},
+            </if>
+            <if test="actorSex != null and actorSex != ''">
+                actor_sex = #{actorSex},
+            </if>
+            <if test="actorConstellation != null and actorConstellation != ''">
+                actor_constellation = #{actorConstellation},
+            </if>
+            <if test="actorGraduation != null and actorGraduation != ''">
+                actor_graduation = #{actorGraduation},
+            </if>
+            <if test="actorHigh != null">
+                actor_high = #{actorHigh},
+            </if>
+            <if test="actorIntroduce != null and actorIntroduce != ''">
+                actor_introduce = #{actorIntroduce},
+            </if>
+            <if test="actorFansName != null and actorFansName != ''">
+                actor_fans_name = #{actorFansName},
+            </if>
+            <if test="actorNationality != null and actorNationality != ''">
+                actor_nationality = #{actorNationality},
+            </if>
+            <if test="actorCompany != null and actorCompany != ''">
+                actor_company = #{actorCompany},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_actor where id = #{id}
+    </delete>
+
+</mapper>
