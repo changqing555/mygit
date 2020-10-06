@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.FilmAwardsDao">
+
+    <resultMap type="edu.xja.entity.FilmAwards" id="FilmAwardsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="filmId" column="film_id" jdbcType="INTEGER"/>
+        <result property="awardsId" column="awards_id" jdbcType="INTEGER"/>
+        <result property="awardsWinnerTime" column="awards_winner_time" jdbcType="TIMESTAMP"/>
+        <result property="awardsWinner" column="awards_winner" jdbcType="VARCHAR"/>
+        <result property="awardsNumber" column="awards_number" jdbcType="VARCHAR"/>
+        <result property="awardsNominate" column="awards_nominate" jdbcType="VARCHAR"/>
+        <result property="awardsFlag" column="awards_flag" jdbcType="OTHER"/>
+        <result property="awardsContent" column="awards_content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FilmAwardsMap">
+        select
+          id, film_id, awards_id, awards_winner_time, awards_winner, awards_number, awards_nominate, awards_flag, awards_content, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_awards
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FilmAwardsMap">
+        select
+          id, film_id, awards_id, awards_winner_time, awards_winner, awards_number, awards_nominate, awards_flag, awards_content, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_awards
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FilmAwardsMap">
+        select
+        id, film_id, awards_id, awards_winner_time, awards_winner, awards_number, awards_nominate, awards_flag,
+        awards_content, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film_awards
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="filmId != null">
+                and film_id = #{filmId}
+            </if>
+            <if test="awardsId != null">
+                and awards_id = #{awardsId}
+            </if>
+            <if test="awardsWinnerTime != null">
+                and awards_winner_time = #{awardsWinnerTime}
+            </if>
+            <if test="awardsWinner != null and awardsWinner != ''">
+                and awards_winner = #{awardsWinner}
+            </if>
+            <if test="awardsNumber != null and awardsNumber != ''">
+                and awards_number = #{awardsNumber}
+            </if>
+            <if test="awardsNominate != null and awardsNominate != ''">
+                and awards_nominate = #{awardsNominate}
+            </if>
+            <if test="awardsFlag != null">
+                and awards_flag = #{awardsFlag}
+            </if>
+            <if test="awardsContent != null and awardsContent != ''">
+                and awards_content = #{awardsContent}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_film_awards(film_id, awards_id, awards_winner_time, awards_winner, awards_number, awards_nominate, awards_flag, awards_content, create_time, creator, operate_time, operator, delete_flag)
+        values (#{filmId}, #{awardsId}, #{awardsWinnerTime}, #{awardsWinner}, #{awardsNumber}, #{awardsNominate}, #{awardsFlag}, #{awardsContent}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_film_awards
+        <set>
+            <if test="filmId != null">
+                film_id = #{filmId},
+            </if>
+            <if test="awardsId != null">
+                awards_id = #{awardsId},
+            </if>
+            <if test="awardsWinnerTime != null">
+                awards_winner_time = #{awardsWinnerTime},
+            </if>
+            <if test="awardsWinner != null and awardsWinner != ''">
+                awards_winner = #{awardsWinner},
+            </if>
+            <if test="awardsNumber != null and awardsNumber != ''">
+                awards_number = #{awardsNumber},
+            </if>
+            <if test="awardsNominate != null and awardsNominate != ''">
+                awards_nominate = #{awardsNominate},
+            </if>
+            <if test="awardsFlag != null">
+                awards_flag = #{awardsFlag},
+            </if>
+            <if test="awardsContent != null and awardsContent != ''">
+                awards_content = #{awardsContent},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_film_awards where id = #{id}
+    </delete>
+
+</mapper>

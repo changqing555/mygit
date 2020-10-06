@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.CinemaDao">
+
+    <resultMap type="edu.xja.entity.Cinema" id="CinemaMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="cinemaName" column="cinema_name" jdbcType="VARCHAR"/>
+        <result property="cinemaBrand" column="cinema_brand" jdbcType="VARCHAR"/>
+        <result property="cinemaCityId" column="cinema_city_id" jdbcType="INTEGER"/>
+        <result property="cinemaDistrictId" column="cinema_district_id" jdbcType="INTEGER"/>
+        <result property="specialHall" column="special_hall" jdbcType="VARCHAR"/>
+        <result property="cinemaAddress" column="cinema_address" jdbcType="VARCHAR"/>
+        <result property="cinemaPhone" column="cinema_phone" jdbcType="VARCHAR"/>
+        <result property="cinemaLongitude" column="cinema_longitude" jdbcType="VARCHAR"/>
+        <result property="cinemaDimensions" column="cinema_dimensions" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CinemaMap">
+        select
+          id, cinema_name, cinema_brand, cinema_city_id, cinema_district_id, special_hall, cinema_address, cinema_phone, cinema_longitude, cinema_dimensions, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_cinema
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CinemaMap">
+        select
+          id, cinema_name, cinema_brand, cinema_city_id, cinema_district_id, special_hall, cinema_address, cinema_phone, cinema_longitude, cinema_dimensions, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_cinema
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CinemaMap">
+        select
+        id, cinema_name, cinema_brand, cinema_city_id, cinema_district_id, special_hall, cinema_address, cinema_phone,
+        cinema_longitude, cinema_dimensions, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_cinema
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="cinemaName != null and cinemaName != ''">
+                and cinema_name = #{cinemaName}
+            </if>
+            <if test="cinemaBrand != null and cinemaBrand != ''">
+                and cinema_brand = #{cinemaBrand}
+            </if>
+            <if test="cinemaCityId != null">
+                and cinema_city_id = #{cinemaCityId}
+            </if>
+            <if test="cinemaDistrictId != null">
+                and cinema_district_id = #{cinemaDistrictId}
+            </if>
+            <if test="specialHall != null and specialHall != ''">
+                and special_hall = #{specialHall}
+            </if>
+            <if test="cinemaAddress != null and cinemaAddress != ''">
+                and cinema_address = #{cinemaAddress}
+            </if>
+            <if test="cinemaPhone != null and cinemaPhone != ''">
+                and cinema_phone = #{cinemaPhone}
+            </if>
+            <if test="cinemaLongitude != null and cinemaLongitude != ''">
+                and cinema_longitude = #{cinemaLongitude}
+            </if>
+            <if test="cinemaDimensions != null and cinemaDimensions != ''">
+                and cinema_dimensions = #{cinemaDimensions}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_cinema(cinema_name, cinema_brand, cinema_city_id, cinema_district_id, special_hall, cinema_address, cinema_phone, cinema_longitude, cinema_dimensions, create_time, creator, operate_time, operator, delete_flag)
+        values (#{cinemaName}, #{cinemaBrand}, #{cinemaCityId}, #{cinemaDistrictId}, #{specialHall}, #{cinemaAddress}, #{cinemaPhone}, #{cinemaLongitude}, #{cinemaDimensions}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_cinema
+        <set>
+            <if test="cinemaName != null and cinemaName != ''">
+                cinema_name = #{cinemaName},
+            </if>
+            <if test="cinemaBrand != null and cinemaBrand != ''">
+                cinema_brand = #{cinemaBrand},
+            </if>
+            <if test="cinemaCityId != null">
+                cinema_city_id = #{cinemaCityId},
+            </if>
+            <if test="cinemaDistrictId != null">
+                cinema_district_id = #{cinemaDistrictId},
+            </if>
+            <if test="specialHall != null and specialHall != ''">
+                special_hall = #{specialHall},
+            </if>
+            <if test="cinemaAddress != null and cinemaAddress != ''">
+                cinema_address = #{cinemaAddress},
+            </if>
+            <if test="cinemaPhone != null and cinemaPhone != ''">
+                cinema_phone = #{cinemaPhone},
+            </if>
+            <if test="cinemaLongitude != null and cinemaLongitude != ''">
+                cinema_longitude = #{cinemaLongitude},
+            </if>
+            <if test="cinemaDimensions != null and cinemaDimensions != ''">
+                cinema_dimensions = #{cinemaDimensions},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_cinema where id = #{id}
+    </delete>
+
+</mapper>

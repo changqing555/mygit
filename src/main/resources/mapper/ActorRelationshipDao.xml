@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.ActorRelationshipDao">
+
+    <resultMap type="edu.xja.entity.ActorRelationship" id="ActorRelationshipMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="actorId" column="actor_id" jdbcType="INTEGER"/>
+        <result property="actorRelationId" column="actor_relation_id" jdbcType="INTEGER"/>
+        <result property="relationship" column="relationship" jdbcType="VARCHAR"/>
+        <result property="cooperationNums" column="cooperation_nums" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ActorRelationshipMap">
+        select
+          id, actor_id, actor_relation_id, relationship, cooperation_nums, sort, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_actor_relationship
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ActorRelationshipMap">
+        select
+          id, actor_id, actor_relation_id, relationship, cooperation_nums, sort, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_actor_relationship
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ActorRelationshipMap">
+        select
+        id, actor_id, actor_relation_id, relationship, cooperation_nums, sort, create_time, creator, operate_time,
+        operator, delete_flag
+        from film_ticket.t_actor_relationship
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="actorId != null">
+                and actor_id = #{actorId}
+            </if>
+            <if test="actorRelationId != null">
+                and actor_relation_id = #{actorRelationId}
+            </if>
+            <if test="relationship != null and relationship != ''">
+                and relationship = #{relationship}
+            </if>
+            <if test="cooperationNums != null">
+                and cooperation_nums = #{cooperationNums}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_actor_relationship(actor_id, actor_relation_id, relationship, cooperation_nums, sort, create_time, creator, operate_time, operator, delete_flag)
+        values (#{actorId}, #{actorRelationId}, #{relationship}, #{cooperationNums}, #{sort}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_actor_relationship
+        <set>
+            <if test="actorId != null">
+                actor_id = #{actorId},
+            </if>
+            <if test="actorRelationId != null">
+                actor_relation_id = #{actorRelationId},
+            </if>
+            <if test="relationship != null and relationship != ''">
+                relationship = #{relationship},
+            </if>
+            <if test="cooperationNums != null">
+                cooperation_nums = #{cooperationNums},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_actor_relationship where id = #{id}
+    </delete>
+
+</mapper>

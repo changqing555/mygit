@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xja.dao.FilmDao">
+
+    <resultMap type="edu.xja.entity.Film" id="FilmMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="filmName" column="film_name" jdbcType="VARCHAR"/>
+        <result property="filmEnName" column="film_en_name" jdbcType="VARCHAR"/>
+        <result property="filmIntro" column="film_intro" jdbcType="VARCHAR"/>
+        <result property="filmType" column="film_type" jdbcType="VARCHAR"/>
+        <result property="filmArea" column="film_area" jdbcType="VARCHAR"/>
+        <result property="filmReleaseTime" column="film_release_time" jdbcType="TIMESTAMP"/>
+        <result property="filmDuration" column="film_duration" jdbcType="INTEGER"/>
+        <result property="filmReleaseAddress" column="film_release_address" jdbcType="VARCHAR"/>
+        <result property="filmScore" column="film_score" jdbcType="OTHER"/>
+        <result property="filmBoxOffice" column="film_box_office" jdbcType="OTHER"/>
+        <result property="filmFormat" column="film_format" jdbcType="VARCHAR"/>
+        <result property="filmSee" column="film_see" jdbcType="INTEGER"/>
+        <result property="filmStatus" column="film_status" jdbcType="OTHER"/>
+        <result property="filmDescription" column="film_description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FilmMap">
+        select
+          id, film_name, film_en_name, film_intro, film_type, film_area, film_release_time, film_duration, film_release_address, film_score, film_box_office, film_format, film_see, film_status, film_description, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FilmMap">
+        select
+          id, film_name, film_en_name, film_intro, film_type, film_area, film_release_time, film_duration, film_release_address, film_score, film_box_office, film_format, film_see, film_status, film_description, create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FilmMap">
+        select
+        id, film_name, film_en_name, film_intro, film_type, film_area, film_release_time, film_duration,
+        film_release_address, film_score, film_box_office, film_format, film_see, film_status, film_description,
+        create_time, creator, operate_time, operator, delete_flag
+        from film_ticket.t_film
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="filmName != null and filmName != ''">
+                and film_name = #{filmName}
+            </if>
+            <if test="filmEnName != null and filmEnName != ''">
+                and film_en_name = #{filmEnName}
+            </if>
+            <if test="filmIntro != null and filmIntro != ''">
+                and film_intro = #{filmIntro}
+            </if>
+            <if test="filmType != null and filmType != ''">
+                and film_type = #{filmType}
+            </if>
+            <if test="filmArea != null and filmArea != ''">
+                and film_area = #{filmArea}
+            </if>
+            <if test="filmReleaseTime != null">
+                and film_release_time = #{filmReleaseTime}
+            </if>
+            <if test="filmDuration != null">
+                and film_duration = #{filmDuration}
+            </if>
+            <if test="filmReleaseAddress != null and filmReleaseAddress != ''">
+                and film_release_address = #{filmReleaseAddress}
+            </if>
+            <if test="filmScore != null">
+                and film_score = #{filmScore}
+            </if>
+            <if test="filmBoxOffice != null">
+                and film_box_office = #{filmBoxOffice}
+            </if>
+            <if test="filmFormat != null and filmFormat != ''">
+                and film_format = #{filmFormat}
+            </if>
+            <if test="filmSee != null">
+                and film_see = #{filmSee}
+            </if>
+            <if test="filmStatus != null">
+                and film_status = #{filmStatus}
+            </if>
+            <if test="filmDescription != null and filmDescription != ''">
+                and film_description = #{filmDescription}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
+            </if>
+            <if test="operator != null and operator != ''">
+                and operator = #{operator}
+            </if>
+            <if test="deleteFlag != null">
+                and delete_flag = #{deleteFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into film_ticket.t_film(film_name, film_en_name, film_intro, film_type, film_area, film_release_time, film_duration, film_release_address, film_score, film_box_office, film_format, film_see, film_status, film_description, create_time, creator, operate_time, operator, delete_flag)
+        values (#{filmName}, #{filmEnName}, #{filmIntro}, #{filmType}, #{filmArea}, #{filmReleaseTime}, #{filmDuration}, #{filmReleaseAddress}, #{filmScore}, #{filmBoxOffice}, #{filmFormat}, #{filmSee}, #{filmStatus}, #{filmDescription}, #{createTime}, #{creator}, #{operateTime}, #{operator}, #{deleteFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update film_ticket.t_film
+        <set>
+            <if test="filmName != null and filmName != ''">
+                film_name = #{filmName},
+            </if>
+            <if test="filmEnName != null and filmEnName != ''">
+                film_en_name = #{filmEnName},
+            </if>
+            <if test="filmIntro != null and filmIntro != ''">
+                film_intro = #{filmIntro},
+            </if>
+            <if test="filmType != null and filmType != ''">
+                film_type = #{filmType},
+            </if>
+            <if test="filmArea != null and filmArea != ''">
+                film_area = #{filmArea},
+            </if>
+            <if test="filmReleaseTime != null">
+                film_release_time = #{filmReleaseTime},
+            </if>
+            <if test="filmDuration != null">
+                film_duration = #{filmDuration},
+            </if>
+            <if test="filmReleaseAddress != null and filmReleaseAddress != ''">
+                film_release_address = #{filmReleaseAddress},
+            </if>
+            <if test="filmScore != null">
+                film_score = #{filmScore},
+            </if>
+            <if test="filmBoxOffice != null">
+                film_box_office = #{filmBoxOffice},
+            </if>
+            <if test="filmFormat != null and filmFormat != ''">
+                film_format = #{filmFormat},
+            </if>
+            <if test="filmSee != null">
+                film_see = #{filmSee},
+            </if>
+            <if test="filmStatus != null">
+                film_status = #{filmStatus},
+            </if>
+            <if test="filmDescription != null and filmDescription != ''">
+                film_description = #{filmDescription},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="operator != null and operator != ''">
+                operator = #{operator},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from film_ticket.t_film where id = #{id}
+    </delete>
+
+</mapper>
